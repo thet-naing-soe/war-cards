@@ -2,4 +2,44 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background-image: url("img/table.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Exo 2", sans-serif;
+  height: 100vh;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+button {
+  background-color: #fff100;
+  cursor: pointer;
+  border: none;
+}
+
+button#new-deck {
+  align-self: flex-start;
+  padding: 5px;
+}
+
+button#new-draw {
+  font-size: 1.2em;
+  padding: 5px;
+  align-self: stretch;
+}
+
+.card-slot {
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 120px;
+  width: calc(120px * 5/7);
+}
+
+div.card-slot:nth-child(1) {
+  margin-bottom: 50px;
 }
