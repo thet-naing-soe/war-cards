@@ -8,7 +8,6 @@ function handleClick() {
     .then((res) => res.json())
     .then((data) => {
       deckId = data.deck_id;
-      console.log(deckId);
     });
 }
 
@@ -17,10 +16,11 @@ draw.addEventListener("click", () => {
   fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.cards);
-      cards.innerHTML = `
-        <img src=${data.cards[0].image} />
-        <img src=${data.cards[1].image} />
+      cards.children[0].innerHTML = `
+        <img src=${data.cards[0].image} class="card"/>
+      `;
+      cards.children[1].innerHTML = `
+        <img src=${data.cards[1].image} class="card"/>
       `;
     });
 });
