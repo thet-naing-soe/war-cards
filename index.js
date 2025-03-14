@@ -9,42 +9,41 @@ const remainingText = document.getElementById("remaining");
 const computerScoreEl = document.getElementById("computer-score");
 const myScoreEl = document.getElementById("my-score");
 
-function handleClick() {
-  fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-    .then((res) => res.json())
-    .then((data) => {
-      remainingText.textContent = `Remaining cards: ${data.remaining}`;
-      deckId = data.deck_id;
-    });
+async function handleClick() {
+  const res = await fetch(
+    "https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/"
+  );
+  const data = await res.json();
+  remainingText.textContent = `Remaining cards: ${data.remaining}`;
+  deckId = data.deck_id;
 }
 
 button.addEventListener("click", handleClick);
-draw.addEventListener("click", () => {
-  fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      remainingText.textContent = `Remaining cards: ${data.remaining}`;
-      cards.children[0].innerHTML = `
+draw.addEventListener("click", async () => {
+  const res = await fetch(
+    `https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`
+  );
+  const data = await res.json();
+  remainingText.textContent = `Remaining cards: ${data.remaining}`;
+  cards.children[0].innerHTML = `
         <img src=${data.cards[0].image} class="card"/>
       `;
-      cards.children[1].innerHTML = `
+  cards.children[1].innerHTML = `
         <img src=${data.cards[1].image} class="card"/>
       `;
-      const winnerText = determineCardWinner(data.cards[0], data.cards[1]);
-      header.textContent = winnerText;
+  const winnerText = determineCardWinner(data.cards[0], data.cards[1]);
+  header.textContent = winnerText;
 
-      if (data.remaining === 0) {
-        draw.disabled = true;
-        if (computerScore > myScore) {
-          header.textContent = "The computer won the game!";
-        } else if (computerScore < myScore) {
-          header.textContent = "You won the game!";
-        } else {
-          header.textContent = "It's a tie game!";
-        }
-      }
-    });
+  if (data.remaining === 0) {
+    draw.disabled = true;
+    if (computerScore > myScore) {
+      header.textContent = "The computer won the game!";
+    } else if (computerScore < myScore) {
+      header.textContent = "You won the game!";
+    } else {
+      header.textContent = "It's a tie game!";
+    }
+  }
 });
 
 function determineCardWinner(card1, card2) {
