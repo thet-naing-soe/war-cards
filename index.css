@@ -56,3 +56,6 @@ img.card {
 .top > p {
   margin: 0 0 0 10px;
 }
+ button:disabled {
+  cursor: not-allowed;
+ }
